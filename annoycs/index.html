@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <title>煩人視窗問卷</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        html,
+        body {
+            background-color: #fff;
+            color: #636b6f;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 200;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .full-height {
+            height: 80vh;
+        }
+
+        .flex-center {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .position-ref {
+            position: relative;
+        }
+
+        .top-right {
+            position: absolute;
+            right: 10px;
+            top: 18px;
+        }
+
+        .content {
+            text-align: center;
+        }
+
+        .title {
+            font-size: 84px;
+        }
+
+        .subtitle {
+            font-size: 36px;
+        }
+
+        .m-b-md {
+            margin-bottom: 30px;
+        }
+
+        #result>a {
+            display: block;
+        }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <div class="flex-center position-ref full-height">
+        <div class="content">
+            <div class="title">
+                煩人視窗問卷
+            </div>
+            <div class="subtitle m-b-md">
+                自動輸入 Google 表單
+            </div>
+            <div class="form-group">
+                <input id="sid" type="number" min="1000000" max="9999999" class="form-control"
+                    style="text-align: center;" placeholder="學號" />
+            </div>
+            <div class="form-group">
+                <input id="week" type="number" min="1" max="30" class="form-control" style="text-align: center;"
+                    placeholder="週次" />
+            </div>
+            <div class="form-group">
+                <input id="num" type="number" min="1" max="30" class="form-control" style="text-align: center;"
+                    placeholder="作業數量" />
+            </div>
+            <div class="form-group">
+                <a id="a"
+                    href="https://portalx.yzu.edu.tw/PortalSocialVB/FMain/PostWall.aspx?Menu=User&UserAccount=xxxxxxxx"></a>
+            </div>
+            <div class="form-group" id="result">
+            </div>
+        </div>
+    </div>
+
+    <p style="position: absolute; left: 2em; bottom: 0.5em" onclick="alert(`1081 視窗程式設計 每週課程問卷\n=======================\n\n由於每週填六張問卷有點麻煩，寫個 script 自動填好。\n按住 Ctrl 點連結，可以用分頁先開好全部，最後再一次送出。\n\n志岳對不起我很懶惰Q_Q`)">說明</p>
+    <p id="about" style="position: absolute; right: 2em; bottom: 0.5em">Yen-Cheng, Zhang &lt;<a
+            href="mailto:tyzescgm@gmail.com?subject=YzuMySenior">tyzescgm@gmail.com</a>&gt;</p>
+
+    <script>
+        window.onload = () => {
+            let sid  = document.querySelector("#sid");
+            let week = document.querySelector("#week");
+            let num  = document.querySelector("#num");
+            let div  = document.querySelector("#result");
+
+            let func = () => {
+                let s = sid.value;
+                let w = week.value;
+                let n = num.value;
+
+                if ([s, w, n].includes(""))
+                    return;
+
+                div.innerHTML = "";
+                while (n --> 0) {
+                    let url = `https://docs.google.com/forms/d/e/1FAIpQLSeR98tp9e9WeLDvdwjCNlQi7L7vjJ5M1EtcG_DcfY3BXp-9HQ/viewform?entry.128677624=${s}&entry.24240824=${n + 1}&entry.188987066=100&entry.126158329=100&entry.1548416091=${w}`;
+                    let link = document.createElement('a');
+                    link.innerText = `第${w}週_${n + 1}`;
+                    link.href = url;
+                    link.target = '_blank';
+                    div.insertBefore(link, div.firstChild);
+                }
+            }
+
+            sid.addEventListener("input", func);
+            week.addEventListener("input", func);
+            num.addEventListener("input", func);
+        }
+    </script>
+</body>
+
+</html>
